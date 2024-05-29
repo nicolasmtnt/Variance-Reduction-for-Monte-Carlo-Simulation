@@ -8,56 +8,56 @@ Monte Carlo simulations are a powerful tool for estimating integrals, especially
 
 Antithetic variables are a variance reduction technique that can significantly improve the efficiency of Monte Carlo simulations.
 
-Consider the problem of estimating the integral of a function $ f(x) $ over the interval $[a, b]$:
+Consider the problem of estimating the integral of a function $f(x)$ over the interval $[a, b]$:
 
 $$ I = \int_a^b f(x) \, dx. $$
 
-In a classic Monte Carlo approach, we estimate this integral by generating $ n $ independent samples $ X_i $ uniformly distributed over $[a, b]$ and computing the sample mean:
+In a classic Monte Carlo approach, we estimate this integral by generating $n$ independent samples $X_i$ uniformly distributed over $[a, b]$ and computing the sample mean:
 
-$$ \hat{I}_{\text{classic}} = (b - a) \frac{1}{n} \sum_{i=1}^n f(X_i). $$
+$$\hat{I}\_{\text{classic}} = (b - a) \frac{1}{n} \sum_{i=1}^{n} f(X_i)$$
 
 The variance of this estimator is given by:
 
 $$ \text{Var}(\hat{I}_{\text{classic}}) = \frac{(b - a)^2}{n} \text{Var}(f(X)). $$
 
-To reduce this variance, we use antithetic variables. For each random sample $ X_i $, we generate an antithetic sample $ \tilde{X}_i $ defined as:
+To reduce this variance, we use antithetic variables. For each random sample $X_i$, we generate an antithetic sample $\tilde{X}_i$ defined as:
 
 $$ \tilde{X}_i = a + b - X_i. $$
 
 The antithetic estimator of the integral is then given by:
 
-$$ \hat{I}_{\text{antithetic}} = (b - a) \frac{1}{2n} \sum_{i=1}^n \left( f(X_i) + f(\tilde{X}_i) \right). $$
+$$ \hat{I}\_{\text{antithetic}} = (b - a) \frac{1}{2n} \sum_{i=1}^n \left( f(X_i) + f(\tilde{X}_i) \right). $$
 
-To analyze the variance reduction, we consider the covariance between $ f(X_i) $ and $ f(\tilde{X}_i) $. The variance of the antithetic estimator is:
+To analyze the variance reduction, we consider the covariance between $f(X_i)$ and $f(\tilde{X}_i)$. The variance of the antithetic estimator is:
 
 $$ \text{Var}(\hat{I}_{\text{antithetic}}) = \frac{(b - a)^2}{4n} \left( \text{Var}(f(X)) + \text{Var}(f(\tilde{X})) + 2 \text{Cov}(f(X), f(\tilde{X})) \right). $$
 
-Since $ f(X) $ and $ f(\tilde{X}) $ are symmetrically distributed, we have $ \text{Var}(f(X)) = \text{Var}(f(\tilde{X})) $, and the expression simplifies to:
+Since $f(X)$ and $f(\tilde{X})$ are symmetrically distributed, we have $\text{Var}(f(X)) = \text{Var}(f(\tilde{X}))$, and the expression simplifies to:
 
 $$ \text{Var}(\hat{I}_{\text{antithetic}}) = \frac{(b - a)^2}{2n} \left( \text{Var}(f(X)) + \text{Cov}(f(X), f(\tilde{X})) \right). $$
 
-If $ f(X) $ and $ f(\tilde{X}) $ are negatively correlated, i.e., $ \text{Cov}(f(X), f(\tilde{X})) < 0 $, the variance of the antithetic estimator is less than that of the classic estimator.
+If $f(X)$ and $f(\tilde{X})$ are negatively correlated, i.e., $\text{Cov}(f(X), f(\tilde{X})) < 0$, the variance of the antithetic estimator is less than that of the classic estimator.
 
 ## Application to a Complex Function
 
-Let us consider the function $ f(x) = e^{x^2} $ and estimate the integral over $[0, 1]$:
+Let us consider the function $f(x) = e^{x^2}$ and estimate the integral over $[0, 1]$:
 
 $$ I = \int_0^1 e^{x^2} \, dx. $$
 
-For the classic Monte Carlo estimation, we generate $ n $ samples $ X_i \sim U(0, 1) $ and compute:
+For the classic Monte Carlo estimation, we generate $n$ samples $X_i \sim U(0, 1)$ and compute:
 
-$$ \hat{I}_{\text{classic}} = \frac{1}{n} \sum_{i=1}^n e^{X_i^2}. $$
+$$ \hat{I}\_{\text{classic}} = \frac{1}{n} \sum_{i=1}^n e^{X_i^2}. $$
 
-For the antithetic estimation, for each $ X_i $, we generate $ \tilde{X}_i = 1 - X_i $ and compute:
+For the antithetic estimation, for each $X_i$, we generate $\tilde{X}_i = 1 - X_i$ and compute:
 
-$$ \hat{I}_{\text{antithetic}} = \frac{1}{2n} \sum_{i=1}^n \left( e^{X_i^2} + e^{(1 - X_i)^2} \right). $$
+$$ \hat{I}\_{\text{antithetic}} = \frac{1}{2n} \sum_{i=1}^n \left( e^{X_i^2} + e^{(1 - X_i)^2} \right). $$
 
 ## Simulation Results
 
 To empirically demonstrate the variance reduction, we performed 1000 simulations with 1000 samples each. The results are summarized as follows:
 
-- Variance of classic estimator: $ \text{Var}(\hat{I}_{\text{classic}}) = \sigma^2_{\text{classic}} $
-- Variance of antithetic estimator: $ \text{Var}(\hat{I}_{\text{antithetic}}) = \sigma^2_{\text{antithetic}} $
+- Variance of classic estimator: $\text{Var}(\hat{I}\_{\text{classic}}) = \sigma^2_{\text{classic}}$
+- Variance of antithetic estimator: $\text{Var}(\hat{I}\_{\text{antithetic}}) = \sigma^2_{\text{antithetic}}$
 
 ### Distribution of Estimates v Boxplot of Estimates
 
@@ -70,7 +70,7 @@ To empirically demonstrate the variance reduction, we performed 1000 simulations
 
 ## Conclusion
 
-The use of antithetic variables in Monte Carlo simulations significantly reduces the variance of the estimator. In the case of estimating the integral of $ f(x) = e^{x^2} $ over $[0, 1]$, the antithetic estimator showed a marked reduction in variance compared to the classic estimator. This demonstrates the effectiveness of antithetic variables as a variance reduction technique in Monte Carlo simulations.
+The use of antithetic variables in Monte Carlo simulations significantly reduces the variance of the estimator. In the case of estimating the integral of $f(x) = e^{x^2}$ over $[0, 1]$, the antithetic estimator showed a marked reduction in variance compared to the classic estimator. This demonstrates the effectiveness of antithetic variables as a variance reduction technique in Monte Carlo simulations.
 
 
 
@@ -83,7 +83,7 @@ Girsanov's Theorem provides a mechanism for changing the probability measure in 
 
 ### Detailed Statement of Girsanov's Theorem
 
-Consider a filtered probability space $(\Omega, \mathcal{F}, (\mathcal{F}_t)_{t \geq 0}, \mathbb{P})$, where $\mathcal{F}_t$ represents the natural filtration generated by a standard Brownian motion $W_t$ under the probability measure $\mathbb{P}$. Let $\theta_t$ be an $\mathcal{F}_t$-adapted process satisfying the Novikov condition:
+Consider a filtered probability space $(\Omega, \mathcal{F}, (\mathcal{F}\_t)_{t \geq 0}, \mathbb{P})$, where $\mathcal{F}_t$ represents the natural filtration generated by a standard Brownian motion $W_t$ under the probability measure $\mathbb{P}$. Let $\theta_t$ be an $\mathcal{F}_t$-adapted process satisfying the Novikov condition:
 
 $$ \mathbb{E}_{\mathbb{P}}\left[\exp\left(\frac{1}{2} \int_0^T \theta_s^2 \, ds\right)\right] < \infty $$
 

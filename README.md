@@ -223,7 +223,7 @@ plt.show()
 
 The following plots are generated from the code above:
 
-![Trajectories](./girsanov.png)
+![Trajectories](Girsanov.png)
 
 
 ## Description of Results
